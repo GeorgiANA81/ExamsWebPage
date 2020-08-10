@@ -1,10 +1,10 @@
 package com.exams.web.application.repositories;
 
 import com.exams.web.application.models.Exam;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface ExamRepository extends CrudRepository<Exam, Long> {
+@Repository
+public interface ExamRepository extends JpaRepository<Exam, Long> {
 
 }

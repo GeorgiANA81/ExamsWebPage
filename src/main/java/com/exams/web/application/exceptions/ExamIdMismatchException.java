@@ -1,9 +1,10 @@
 package com.exams.web.application.exceptions;
 
 import lombok.Data;
-import java.lang.Throwable;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class ExamIdMismatchException extends Throwable
-{
+public class ExamIdMismatchException extends RuntimeException {
+
 }
