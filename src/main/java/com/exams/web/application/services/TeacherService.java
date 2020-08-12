@@ -19,4 +19,8 @@ public class TeacherService {
     public List<Teacher> getAll() {
         return repository.findAll();
     }
+
+    public Teacher getOne(long teacher) {
+        return repository.getOne(teacher);
+    }
 }

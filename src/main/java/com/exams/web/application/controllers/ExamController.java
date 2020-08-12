@@ -2,7 +2,9 @@ package com.exams.web.application.controllers;
 
 import com.exams.web.application.exceptions.ExamIdMismatchException;
 import com.exams.web.application.models.Exam;
+import com.exams.web.application.models.Teacher;
 import com.exams.web.application.services.ExamService;
+import com.exams.web.application.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -21,10 +23,16 @@ public class ExamController {
     String appName;
 
     private ExamService service;
+    private TeacherService teacherService;
 
     @Autowired
     public void setExamService(ExamService service) {
         this.service = service;
+    }
+
+    @Autowired
+    public void setTeacherService(TeacherService teacherService) {
+        this.teacherService = teacherService;
     }
 
     @GetMapping("/")
@@ -77,7 +85,8 @@ public class ExamController {
     }
 
     @GetMapping("/exam/{teacher}")
-    private Predicate<Exam> equalTeacher(@PathVariable String teacher) {
+    private Predicate<Exam> equalTeacher(@PathVariable("teacher") long teacherId) {
+        Teacher teacher = teacherService.getOne(teacherId);
         return exam -> exam.getTeacher().equals(teacher);
     }
 

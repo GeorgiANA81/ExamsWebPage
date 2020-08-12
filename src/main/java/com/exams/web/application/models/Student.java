@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "student")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,10 +20,8 @@ public class Student {
     private String email;
     @Column
     private String password;
-
     @Column
     private int academicYear;
-
     @Column
-    private String pubId;
+    private String pubid;
 }
