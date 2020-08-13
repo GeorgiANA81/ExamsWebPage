@@ -1,7 +1,7 @@
-package com.exams.web.application.services;
+package com.exams.backend.service;
 
-import com.exams.web.application.models.Student;
-import com.exams.web.application.repositories.StudentRepository;
+import com.exams.backend.entity.StudentEntity;
+import com.exams.backend.repo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +16,15 @@ public class StudentService {
         this.repository = repository;
     }
 
-    public List<Student> getAll() {
+    public List<StudentEntity> getAll() {
         return repository.findAll();
     }
 
-    public Student getOne(String username) {
-        return repository.getOne(username);
+    public StudentEntity getOne(String email) {
+        return repository.getOneByEmail(email);
     }
 
-    public Student createOrUpdate(Student student) {
+    public StudentEntity createOrUpdate(StudentEntity student) {
         return repository.save(student);
     }
 }
