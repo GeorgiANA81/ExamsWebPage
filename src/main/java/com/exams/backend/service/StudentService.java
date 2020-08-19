@@ -20,11 +20,15 @@ public class StudentService {
         return repository.findAll();
     }
 
-    public StudentEntity getOne(String email) {
-        return repository.getOneByEmail(email);
-    }
-
     public StudentEntity createOrUpdate(StudentEntity student) {
         return repository.save(student);
+    }
+
+    public StudentEntity getOneById(long id) {
+        return repository.getOne(id);
+    }
+
+    public StudentEntity getOneByEmail(String email) {
+        return repository.getOneByEmail(email);
     }
 }
