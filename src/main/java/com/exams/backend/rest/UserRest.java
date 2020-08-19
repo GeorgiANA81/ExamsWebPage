@@ -1,9 +1,9 @@
 package com.exams.backend.rest;
 
-import com.exams.backend.dto.StudentDataDTO;
-import com.exams.backend.dto.StudentResponseDTO;
-import com.exams.backend.entity.StudentEntity;
-import com.exams.backend.service.StudentService;
+import com.exams.backend.dto.UserDataDTO;
+import com.exams.backend.dto.UserResponseDTO;
+import com.exams.backend.entity.UserEntity;
+import com.exams.backend.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/student")
-public class StudentRest {
-    private StudentService studentService;
+public class UserRest {
+    private UserService userService;
     private ModelMapper modelMapper;
 
     @Autowired
-    public void setService(StudentService studentService) {
-        this.studentService = studentService;
+    public void setService(UserService userService) {
+        this.userService = userService;
     }
 
     @Autowired
@@ -30,18 +30,18 @@ public class StudentRest {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<StudentResponseDTO>> getAll() {
-        List<StudentResponseDTO> result = studentService.getAll()
+    public ResponseEntity<List<UserResponseDTO>> getAll() {
+        List<UserResponseDTO> result = userService.getAll()
                 .stream()
-                .map(studentEntity -> modelMapper.map(studentEntity, StudentResponseDTO.class))
+                .map(userEntity -> modelMapper.map(userEntity, UserResponseDTO.class))
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<StudentResponseDTO> getUser(@PathVariable("email") String email) {
-        StudentResponseDTO result = modelMapper.map(studentService.getOneByEmail(email), StudentResponseDTO.class);
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable("email") String email) {
+        UserResponseDTO result = modelMapper.map(userService.getOneByEmail(email), UserResponseDTO.class);
 
         // create the response depending on the result
         if (result != null) {
@@ -52,12 +52,12 @@ public class StudentRest {
     }
 
     @PostMapping("/")
-    public ResponseEntity<StudentResponseDTO> createUser(@RequestBody StudentDataDTO student) {
-        StudentResponseDTO result = modelMapper.map(
-                studentService.createOrUpdate(
-                        modelMapper.map(student, StudentEntity.class)
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserDataDTO userDataDTO) {
+        UserResponseDTO result = modelMapper.map(
+                userService.createOrUpdate(
+                        modelMapper.map(userDataDTO, UserEntity.class)
                 ),
-                StudentResponseDTO.class
+                UserResponseDTO.class
         );
 
         return new ResponseEntity<>(result, HttpStatus.CREATED);

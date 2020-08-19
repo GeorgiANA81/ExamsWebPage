@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.xml.bind.DatatypeConverter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 // lombok
 @Data
@@ -15,15 +13,14 @@ import java.security.NoSuchAlgorithmException;
 @NoArgsConstructor
 // spring
 @Entity
-@Table(name = "student")
-public class StudentEntity {
+@Table(name = "user")
+public class UserEntity {
     // marks this as part of the primary key
     @Id
     // tells jpa driver to choose appropriate generator strategy
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    // sample column configuration
     @Column(length = 128)
     private String name;
     @Column(unique = true)
@@ -31,21 +28,16 @@ public class StudentEntity {
     @Column
     private String password;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    List<RoleEntity> roles;
 
-    private StudentEntity(long id, String name, String email, String password) {
+    public UserEntity(long id, String name, String email, String password, List<RoleEntity> roles) {
         super();
 
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    public String encodePassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(password.getBytes());
-
-        byte[] digest = md.digest();
-        return DatatypeConverter.printHexBinary(digest).toUpperCase();
+        this.roles = roles;
     }
 }

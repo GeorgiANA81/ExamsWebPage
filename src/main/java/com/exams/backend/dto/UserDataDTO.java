@@ -3,7 +3,7 @@ package com.exams.backend.dto;
 import lombok.Data;
 
 @Data
-public class StudentResponseDTO {
+public class UserDataDTO {
     private long id;
     private String name;
     private String email;
