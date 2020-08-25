@@ -57,10 +57,15 @@ public class UserService {
         return userRepository.getOneByEmail(email);
     }
 
-    public String signin(String email, String password) {
+    public UserEntity signin(String email, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            return jwtTokenProvider.createToken(email, userRepository.getOneByEmail(email).getRoles());
+            UserEntity user = userRepository.getOneByEmail(email);
+            String token = jwtTokenProvider.createToken(email, user.getRoles());
+
+            user.setToken(token);
+
+            return user;
         } catch (AuthenticationException e) {
             throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
         }

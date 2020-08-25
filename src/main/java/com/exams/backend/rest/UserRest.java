@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/student")
+@RequestMapping("/api/user")
 public class UserRest {
     private UserService userService;
     private ModelMapper modelMapper;
@@ -29,6 +29,16 @@ public class UserRest {
         this.modelMapper = modelMapper;
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<UserResponseDTO> login(@RequestParam String email, @RequestParam String password) {
+        UserEntity user = userService.signin(email, password);
+
+        return new ResponseEntity<>(
+                modelMapper.map(user, UserResponseDTO.class),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<UserResponseDTO>> getAll() {
         List<UserResponseDTO> result = userService.getAll()
@@ -41,7 +51,12 @@ public class UserRest {
 
     @GetMapping("/{email}")
     public ResponseEntity<UserResponseDTO> getUser(@PathVariable("email") String email) {
-        UserResponseDTO result = modelMapper.map(userService.getOneByEmail(email), UserResponseDTO.class);
+        UserEntity user = userService.getOneByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserResponseDTO result = modelMapper.map(user, UserResponseDTO.class);
 
         // create the response depending on the result
         if (result != null) {

@@ -9,6 +9,11 @@ spring:
     url: jdbc:h2:mem:spring-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driverClassName: org.h2.Driver
     username: sa
-    password:
+    password: sa
     database-platform: org.hibernate.dialect.H2Dialect
     data: classpath:sql/seed.sql
+  security:
+    jwt:
+      token:
+        secret-key: secret-key
+        expire-length: 300000 # 5 minutes duration by default: 5 minutes * 60 seconds * 1000 miliseconds
