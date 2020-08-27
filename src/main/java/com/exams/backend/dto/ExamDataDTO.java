@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class ExamDataDTO {
     private long id;
-    private int academicYear;
+    private Integer academicYear;
     private String session;
-    private int yearOfStudy;
+    private Integer yearOfStudy;
     private String faculty;
     private String section;
     private String course;
     private String teacher;
-    private int numberOfSeats;
+    private Integer numberOfSeats;
     private String date;
 }

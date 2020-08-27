@@ -18,45 +18,45 @@ public class ExamEntity {
     @Id
     // tells jpa driver to choose appropriate generator strategy
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(nullable = false, name = "academic_year")
-    private int academicYear;
+    @Column(name = "academic_year")
+    private Integer academicYear;
 
-    @Column(nullable = false, name = "session")
+    @Column(name = "session")
     private String session;
 
-    @Column(nullable = false, name = "year_of_study")
-    private int yearOfStudy;
+    @Column(name = "year_of_study")
+    private Integer yearOfStudy;
 
-    @Column(nullable = false, name = "faculty")
+    @Column(name = "faculty")
     private String faculty;
 
-    @Column(nullable = false, name = "section")
+    @Column(name = "section")
     private String section;
 
-    @Column(nullable = false, name = "course")
+    @Column(name = "course")
     private String course;
 
-    @Column(nullable = false, name = "teacher")
+    @Column(name = "teacher")
     private String teacher;
 
-    @Column(nullable = false, name = "number_of_seats")
-    private int numberOfSeats;
+    @Column(name = "number_of_seats")
+    private Integer numberOfSeats;
 
-    @Column(nullable = false, name = "date")
+    @Column(name = "date")
     private String date;
 
     private ExamEntity(
-            long id,
-            int academicYear,
+            Long id,
+            Integer academicYear,
             String session,
-            int yearOfStudy,
+            Integer yearOfStudy,
             String faculty,
             String section,
             String course,
             String teacher,
-            int numberOfSeats,
+            Integer numberOfSeats,
             String date
     ) {
         super();

@@ -37,4 +37,8 @@ public class ExamService {
 
         return false;
     }
+
+    public ExamEntity getOneById(long id) {
+        return repository.getOne(id);
+    }
 }

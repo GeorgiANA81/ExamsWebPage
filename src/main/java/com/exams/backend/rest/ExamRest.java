@@ -50,6 +50,16 @@ public class ExamRest {
         return new ResponseEntity<>(exams, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ExamResponseDTO> get(@PathVariable long id) {
+        ExamResponseDTO exam = modelMapper.map(
+                examService.getOneById(id),
+                ExamResponseDTO.class
+        );
+
+        return new ResponseEntity<>(exam, HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<ExamResponseDTO> create(@RequestBody ExamDataDTO exam) {
         ExamResponseDTO result = modelMapper.map(
@@ -62,7 +72,8 @@ public class ExamRest {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @CrossOrigin(origins = {"*"}, methods = {RequestMethod.PUT})
+    @PutMapping("/{id}/update")
     public ResponseEntity<ExamResponseDTO> updateExam(@RequestBody ExamDataDTO exam, @PathVariable Long id) {
         if (exam.getId() != id) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -78,11 +89,11 @@ public class ExamRest {
         return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/{id}")
     @CrossOrigin(origins = {"*"}, methods = {RequestMethod.DELETE})
-    public ResponseEntity<String> delete(@RequestParam("id") long id) {
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<String> delete(@PathVariable long id) {
         if (examService.delete(id)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("", HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
