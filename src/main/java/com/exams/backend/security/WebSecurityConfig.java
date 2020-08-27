@@ -37,11 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/exam/**").permitAll()//
                 .antMatchers("/h2-console/**/**").permitAll()
                 // Disallow everything else..
-//                .anyRequest().authenticated();
+                .anyRequest().authenticated();
         ;
 
         // If a user try to access a resource without having enough permissions
-        http.exceptionHandling().accessDeniedPage("/login");
+        http.exceptionHandling().accessDeniedPage("/api/user/login");
 
         // Apply JWT
         http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));

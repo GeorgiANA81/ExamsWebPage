@@ -50,7 +50,7 @@ public class ExamRest {
         return new ResponseEntity<>(exams, HttpStatus.OK);
     }
 
-    @PostMapping("/exam")
+    @PostMapping("/add")
     public ResponseEntity<ExamResponseDTO> create(@RequestBody ExamDataDTO exam) {
         ExamResponseDTO result = modelMapper.map(
                 examService.createOrUpdate(
@@ -79,6 +79,7 @@ public class ExamRest {
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin(origins = {"*"}, methods = {RequestMethod.DELETE})
     public ResponseEntity<String> delete(@RequestParam("id") long id) {
         if (examService.delete(id)) {
             return new ResponseEntity<>(HttpStatus.OK);
