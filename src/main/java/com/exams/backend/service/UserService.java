@@ -1,5 +1,6 @@
 package com.exams.backend.service;
 
+import com.exams.backend.dto.UserPasswordDataDTO;
 import com.exams.backend.entity.UserEntity;
 import com.exams.backend.exception.CustomException;
 import com.exams.backend.repo.UserRepository;
@@ -79,5 +80,19 @@ public class UserService {
         } else {
             throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
         }
+    }
+
+    public UserEntity changePassword(UserPasswordDataDTO userPasswordDataDTO) {
+        if (!userRepository.existsByEmail(userPasswordDataDTO.getEmail())) {
+            throw new CustomException("Username not found", HttpStatus.NOT_FOUND);
+        }
+
+        UserEntity user = userRepository.getOneByEmail(userPasswordDataDTO.getEmail());
+        if (!passwordEncoder.matches(userPasswordDataDTO.getCurrentPassword(), user.getPassword())) {
+            throw new CustomException("Invalid password provided.", HttpStatus.NOT_FOUND);
+        }
+
+        user.setPassword(passwordEncoder.encode(userPasswordDataDTO.getNewPassword()));
+        return userRepository.save(user);
     }
 }

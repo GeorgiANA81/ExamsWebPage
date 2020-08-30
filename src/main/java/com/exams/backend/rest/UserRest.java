@@ -1,6 +1,7 @@
 package com.exams.backend.rest;
 
 import com.exams.backend.dto.UserDataDTO;
+import com.exams.backend.dto.UserPasswordDataDTO;
 import com.exams.backend.dto.UserResponseDTO;
 import com.exams.backend.entity.UserEntity;
 import com.exams.backend.service.UserService;
@@ -37,6 +38,14 @@ public class UserRest {
                 modelMapper.map(user, UserResponseDTO.class),
                 HttpStatus.OK
         );
+    }
+
+    @CrossOrigin(origins = {"*"}, methods = {RequestMethod.POST})
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody UserPasswordDataDTO userPasswordDataDTO) {
+        UserEntity user = userService.changePassword(userPasswordDataDTO);
+
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
     @GetMapping("/")
